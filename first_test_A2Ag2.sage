@@ -57,7 +57,6 @@ def allowed_monomials_2(h: int):
       c - a - b + e in {-2, -3}
         need to figure out what happens if b=h and e =1
     """
-
     out = []
     for a in range(1, h + 1):
         for b in range(0, h + 1):
@@ -82,9 +81,6 @@ def allowed_monomials_1(h: int):
       0 <= c
       c - a - b in {-2, -3}
     """
-    if not isinstance(h, int) or h <= 0:
-        raise ValueError("h must be a positive integer")
-
     out = []
     for a in range(1, h + 1):
         for b in range(0, h + 1):
@@ -103,9 +99,6 @@ def allowed_monomials_11(h: int):
       0 <= d
       c + d - a - b  = -2
     """
-    if not isinstance(h, int) or h <= 0:
-        raise ValueError("h must be a positive integer")
-
     out = []
     for a in range(1, h + 1):
         for b in range(0, h + 1):
@@ -135,17 +128,9 @@ def integral_genus_1_root(triples: Sequence[Triple]):
     """
 
     # --- Validate triples ---
-
-    for i, t in enumerate(triples):
-        if not (isinstance(t, tuple) and len(t) == 3):
-            raise ValueError(f"triples[{i}] must be a tuple of length 3")
-        if not all(isinstance(x, int) for x in t):
-            raise TypeError(f"triples[{i}] must contain integers only")
-        if not all(x >= 0 for x in t):  # change to x > 0 if you want strictly positive
-            raise ValueError(f"triples[{i}] must be non-negative")
-        length = len(triples)
+        k = len(triples)
         exponent_list = [a+b-c-1 for (a,b,c) in triples]
-    if sum(exponent_list) == length:
+    if sum(exponent_list) == k:
         return ((-1)**length)*(1/24)*multinomial_coeff(triples)
     else:
         return 0
@@ -158,13 +143,6 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
                if True  -> subscripts = (1, h-a, h-b, h) or (1, h-a, h-b-1, h)
     Returns The integral of psi^c * prod_i lambda_{subscripts[i]} times a combinatorial factor
     """
-    if len(vals) < 2:
-        raise ValueError("vals must have at least two elements (a and b).")
-    a, b, c, d, e = vals[0], vals[1], vals[2], vals[3], vals[4]
-    if not all(isinstance(x, int) for x in (a, b, h)):
-        raise TypeError("a, b, and h must be integers.")
-    if a < 0 or b < 0 or h < max(a, b):
-        raise ValueError("Require non-negative a,b and h > a and h > b.")
     if e==0:
         if not insertion:
             subscripts = (h - a, h - b, h)
@@ -175,7 +153,6 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
             subscripts = (h - a, h - b - 1, h)
         if insertion:
             subscripts = (1, h - a, h - b - 1, h)
-
     counts = tuple([0] * h)  # indices 0..h-1 correspond to values 1..h
     for s in subscripts:
         if 1 <= s <= h:          # only count valid positions
@@ -193,13 +170,6 @@ def integral_genus_h_leaf_genus_1_1_root(vals: Sequence[int], h: int, insertion:
                if True  -> subscripts = (1, h-a, h-b, h) 
     Returns The integral \int_{Mbar_{h,2}} psi1^c * psi2^d * prod_i lambda_{subscripts[i]} times a combinatorial factor
     """
-    if len(vals) < 4:
-        raise ValueError("vals must have at least four elements (a, b, c, d).")
-    a, b, c, d = vals[0], vals[1], vals[2], vals[3]
-    if not all(isinstance(x, int) for x in (a, b, c, d, h)):
-        raise TypeError("a, b, and h must be integers.")
-    if a < 0 or b < 0 or c <0 or d < 0 or h < max(a, b):
-        raise ValueError("Require non-negative a,b,c,d and h >= a and h >= b.")
     if not insertion:
         subscripts = (h - a, h - b, h)
     if insertion:
@@ -218,13 +188,6 @@ def integral_genus_h_leaf_genus_1_root(vals: Sequence[int], h: int, insertion: b
                if True  -> subscripts = (1, h-a, h-b, h) 
     Returns The integral \int_{Mbar_{h,2}} psi1^c * psi2^d * prod_i lambda_{subscripts[i]} times a combinatorial factor
     """
-    if len(vals) < 4:
-        raise ValueError("vals must have at least four elements (a, b, c, d).")
-    a, b, c, d = vals[0], vals[1], vals[2], vals[3]
-    if not all(isinstance(x, int) for x in (a, b, c, d, h)):
-        raise TypeError("a, b, and h must be integers.")
-    if a < 0 or b < 0 or c <0 or d < 0 or h < max(a, b):
-        raise ValueError("Require non-negative a,b,c,d and h >= a and h >= b.")
     if not insertion:
         subscripts = (h - a, h - b, h)
     if insertion:
@@ -252,14 +215,6 @@ def integral_genus_1_root(quintuples: Sequence[Quin]):
 
     where k is the length of the list.
     """
-
-    for i, t in enumerate(quintuples):
-        if not (isinstance(t, tuple) and len(t) == 5):
-            raise ValueError(f"quintuples[{i}] must be a tuple of length 5")
-        if not all(isinstance(x, int) for x in t):
-            raise TypeError(f"quintuples[{i}] must contain integers only")
-        if not all(x >= 0 for x in t):  # change to x > 0 if you want strictly positive
-            raise ValueError(f"triples[{i}] must be non-negative")
     k = len(quintuples)
     exponent_list = [a+b-c-1 for (a,b,c) in quintuples]
     if sum(exponent_list) == k:
@@ -284,16 +239,6 @@ def integral_genus_2_root(quintuples: Sequence[Quin], insertion: bool):
 
     where k is the length of the list.
     """
-
-    # --- Validate quintuples ---
-
-    for i, t in enumerate(quintuples):
-        if not (isinstance(t, tuple) and len(t) == 5):
-            raise ValueError(f"quintuples[{i}] must be a tuple of length 5")
-        if not all(isinstance(x, int) for x in t):
-            raise TypeError(f"quintuples[{i}] must contain integers only")
-        if not all(x >= 0 for x in t):  # change to x > 0 if you want strictly positive
-            raise ValueError(f"triples[{i}] must be non-negative")
     k = len(quintuples)
     if insertion:
         lambda1insertions = sum(quintuples[i][4] for i in range(0, k)) +1
