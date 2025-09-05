@@ -126,10 +126,8 @@ def integral_genus_1_root(triples: Sequence[Triple]):
 
     where k is the length of the list.
     """
-
-    # --- Validate triples ---
-        k = len(triples)
-        exponent_list = [a+b-c-1 for (a,b,c) in triples]
+    k = len(triples)
+    exponent_list = [a+b-c-1 for (a,b,c) in triples]
     if sum(exponent_list) == k:
         return ((-1)**length)*(1/24)*multinomial_coeff(triples)
     else:
