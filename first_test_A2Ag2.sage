@@ -137,8 +137,6 @@ def integral_genus_1_root(triples: Sequence[Triple]):
     """
 
     # --- Validate triples ---
-    if not isinstance(triples, (list, tuple)):
-        raise TypeError("triples must be a list or tuple of 3-int tuples")
 
     for i, t in enumerate(triples):
         if not (isinstance(t, tuple) and len(t) == 3):
@@ -169,12 +167,12 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
         raise TypeError("a, b, and h must be integers.")
     if a < 0 or b < 0 or h < max(a, b):
         raise ValueError("Require non-negative a,b and h > a and h > b.")
-    if e=0:
+    if e==0:
         if not insertion:
             subscripts = (h - a, h - b, h)
         if insertion:
             subscripts = (1, h - a, h - b, h)
-    if e=1:
+    if e==1:
         if not insertion:
             subscripts = (h - a, h - b - 1, h)
         if insertion:
@@ -184,12 +182,12 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
     for s in subscripts:
         if 1 <= s <= h:          # only count valid positions
             counts[s - 1] += 1
-    if e=0:
+    if e==0:
         return (-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,))
-    if e=1:
+    if e==1:
         return (b+1)*(-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,))
 
-def integral_genus_h_leaf_genus_1_1_root(vals: Sequence[int], h: int, insertion: bool) -> List[int]:
+def integral_genus_h_leaf_genus_1_1_root(vals: Sequence[int], h: int, insertion: bool):
     r"""
     vals: [a, b, c, d]
     h: integer > a and > b
@@ -214,7 +212,7 @@ def integral_genus_h_leaf_genus_1_1_root(vals: Sequence[int], h: int, insertion:
             counts[s - 1] += 1
     return (-1)**(a+b)*hodge_integral(h,1,counts, (), (c,d))
 
-def integral_genus_h_leaf_genus_1_root(vals: Sequence[int], h: int, insertion: bool) -> List[int]:
+def integral_genus_h_leaf_genus_1_root(vals: Sequence[int], h: int, insertion: bool):
     r"""
     vals: [a, b, c]
     h: integer > a and > b
@@ -257,10 +255,6 @@ def integral_genus_1_root(quintuples: Sequence[Quin]):
     where k is the length of the list.
     """
 
-    # --- Validate triples ---
-    if not isinstance(quintuples, (list, tuple)):
-        raise TypeError("quintuples must be a list or tuple of 5-int tuples")
-
     for i, t in enumerate(quintuples):
         if not (isinstance(t, tuple) and len(t) == 5):
             raise ValueError(f"quintuples[{i}] must be a tuple of length 5")
@@ -294,8 +288,6 @@ def integral_genus_2_root(quintuples: Sequence[Quin], insertion: bool):
     """
 
     # --- Validate quintuples ---
-    if not isinstance(quintuples, (list, tuple)):
-        raise TypeError("quintuples must be a list or tuple of 5-int tuples")
 
     for i, t in enumerate(quintuples):
         if not (isinstance(t, tuple) and len(t) == 5):
@@ -317,7 +309,7 @@ def integral_genus_2_root(quintuples: Sequence[Quin], insertion: bool):
     if lambdainsertions == 0:
         integrand = lambdaclass(1,2,k)
         integrand_codimension = 2
-    for i = 1..k:
+    for i in range(1, k+1):
         integrand_codimension += quintuple[0] + quintuple[1]-quintuple[2]-1
     if not integrand_codimension == 3 + k:
         return 0
@@ -325,7 +317,7 @@ def integral_genus_2_root(quintuples: Sequence[Quin], insertion: bool):
         G = SymmetricGroup(k)
         S = psiclass(1,2,1)
         S1 = S.forgetful_pullback(range(2, k+1))
-        for i = 1..k:
+        for i in range(1, k+1):
             g = G("1{i}")
             S2 = S1.permutation_action(g) #this is the forgetfull pullback of psi
             integrand = integrand*((S2-psiclass(i,2,k))**(quintuple[0] + quintuple[1]-quintuple[2]-quintuple[3]-1))*(S2**quintuple[3])
