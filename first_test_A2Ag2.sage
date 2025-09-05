@@ -141,6 +141,7 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
                if True  -> subscripts = (1, h-a, h-b, h) or (1, h-a, h-b-1, h)
     Returns The integral of psi^c * prod_i lambda_{subscripts[i]} times a combinatorial factor
     """
+    subscripts = None
     if e==0:
         if not insertion:
             subscripts = (h - a, h - b, h)
