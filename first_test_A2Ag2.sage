@@ -112,10 +112,10 @@ def allowed_monomials_11(h: int):
     for a in range(1, h + 1):
         for b in range(0, h + 1):
             l = a + b -2
-                if l < 0:
-                    continue
-                for c in range(0, l + 1):
-                    out.append((a, b, c, l-c))
+            if l < 0:
+                continue
+            for c in range(0, l + 1):
+                out.append((a, b, c, l-c))
     return out
 
 def integral_genus_1_root(triples: Sequence[Triple]):
