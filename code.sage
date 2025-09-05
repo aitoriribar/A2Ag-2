@@ -1,13 +1,11 @@
-from admcycles.admcycles import fundclass, psiclass, lambdaclass, 
+from admcycles.admcycles import fundclass, psiclass, lambdaclass, forgetful_pullback, permutation_action
 from admcycles.stable_graph import StableGraph
 from admcycles.tautological_ring import TautologicalRing
 from sage.combinat.integer_vector import IntegerVectors
 from sage.combinat.partition import Partition, Partitions
-from sage.combinat.set_partition import SetPartitions
 from sage.functions.other import factorial, floor
 from sage.misc.misc_c import prod
 from sage.rings.integer_ring import ZZ
-from admcycles.admcycles import HurData, Hidentify
 from sage.groups.perm_gps.permgroup import PermutationGroup
 from sage.rings.rational_field import QQ
 
@@ -329,7 +327,7 @@ def integral_genus_2_root(quintuples: Sequence[Quin], insertion: bool):
         S1 = S.forgetful_pullback(range(2, k+1))
         for i = 1..k:
             g = G("1{i}")
-            S2 = S1.permutationaction(g) #this is the forgetfull pullback of psi
+            S2 = S1.permutation_action(g) #this is the forgetfull pullback of psi
             integrand = integrand*((S2-psiclass(i,2,k))**(quintuple[0] + quintuple[1]-quintuple[2]-quintuple[3]-1))*(S2**quintuple[3])
         return integral.evaluate()
 
