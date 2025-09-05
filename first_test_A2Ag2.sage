@@ -57,8 +57,6 @@ def allowed_monomials_2(h: int):
       c - a - b + e in {-2, -3}
         need to figure out what happens if b=h and e =1
     """
-    if not isinstance(h, int) or h <= 0:
-        raise ValueError("h must be a positive integer")
 
     out = []
     for a in range(1, h + 1):
