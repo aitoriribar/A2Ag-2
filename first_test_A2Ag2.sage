@@ -157,9 +157,9 @@ def integral_genus_h_leaf_genus_2_root(vals: Sequence[int], h: int, insertion: b
         if 1 <= s <= h:          # only count valid positions
             counts[s - 1] += 1
     if e==0:
-        return (-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,))
+        return [(-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,)), counts]
     if e==1:
-        return (b+1)*(-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,))
+        return [(b+1)*(-1)**(a+b)*multinomial_coeff((c,d))*hodge_integral(h,1,counts, (), (c,)), counts]
 
 def integral_genus_h_leaf_genus_1_1_root(vals: Sequence[int], h: int, insertion: bool):
     r"""
